@@ -38,7 +38,7 @@ renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
 // Performance optimizations
 renderer.shadowMap.enabled = false; // Disable shadows for better performance
-renderer.outputEncoding = THREE.sRGBEncoding;
+renderer.outputColorSpace = THREE.SRGBColorSpace;
 renderer.toneMapping = THREE.ACESFilmicToneMapping;
 renderer.toneMappingExposure = 1;
 
