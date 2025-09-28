@@ -4,26 +4,126 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Crystal Portfolio</title>
+
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            color: #E8E8E8;
+            /* Add dark background to avoid white screen during loading */
+            background-color: #0c001a; 
+        }
+
+        /* Pin canvas to background so it doesn't move */
+        .webgl {
+            position: fixed;
+            top: 0;
+            left: 0;
+            outline: none;
+        }
+
+        /* Styles for content that will scroll */
+        .content {
+            position: relative; /* To be above canvas */
+            z-index: 1;
+        }
+
+        section {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh; /* Each section full screen height */
+            padding: 2rem;
+            text-align: center; /* Center text */
+        }
+
+        h1 {
+            font-family: 'Unbounded', sans-serif;
+            font-weight: 900;
+            color: #00FFFF; /* Яскравий блакитний */
+            font-size: 5em;
+            /* Ось магія 3D-ефекту */
+            text-shadow:
+                -1px -1px 0 #000,
+                 1px -1px 0 #000,
+                -1px  1px 0 #000,
+                 1px  1px 0 #000,
+                 0 1px 0 #111,
+                 0 2px 0 #222,
+                 0 3px 0 #222,
+                 0 4px 0 #333,
+                 0 5px 10px rgba(0,0,0,.5); /* Фінальна м'яка тінь для об'єму */
+            opacity: 1; /* Показуємо перший заголовок */
+        }
+
+        h2 {
+            font-family: 'Unbounded', sans-serif;
+            font-weight: 900;
+            color: #FF00FF; /* Яскравий фіолетовий */
+            font-size: 4em;
+            text-shadow:
+                -1px -1px 0 #000,
+                 1px -1px 0 #000,
+                -1px  1px 0 #000,
+                 1px  1px 0 #000,
+                 0 1px 0 #111,
+                 0 2px 0 #222,
+                 0 3px 0 #222,
+                 0 4px 0 #333,
+                 0 5px 10px rgba(0,0,0,.5);
+            opacity: 0; /* Приховуємо h2 за замовчуванням */
+        }
+        
+        p {
+            font-family: 'Unbounded', sans-serif;
+            font-weight: 300; /* Зробимо шрифт трохи насиченішим */
+            color: #00FF00; /* Яскравий зелений */
+            text-align: center;
+            line-height: 1.5; /* Покращимо відстань між рядками */
+
+            /* Додаємо м'яку тінь для ефекту об'єму */
+            text-shadow: 
+                0px 1px 2px rgba(0, 0, 0, 0.7), /* Тінь для глибини */
+                0px 0px 4px rgba(0, 0, 0, 0.5);   /* Легке розмиття для виразності */
+            opacity: 1; /* Показуємо перший параграф */
+        }
+    </style>
 </head>
 <body>
     <canvas class="webgl"></canvas>
 
     <main class="content">
-        <section class="section-one">
-            <h1>Привітання</h1>
-            <p>Прокрутіть вниз, щоб побачити магію</p>
+        <section class="section">
+            <h1 class="text-3d">Welcome</h1>
+            <p>Scroll down to witness the magic. The crystal in the background will react to your actions.</p>
         </section>
-        <section class="section-two">
-            <h2>Проєкти</h2>
-            <p>Кристал змінюється, коли ви фокусуєтесь на новій інформації.</p>
+        <section class="section">
+            <h2 class="text-3d">Projects</h2>
+            <p>The crystal transforms as you focus on new information, symbolizing new facets of experience.</p>
         </section>
-        <section class="section-three">
-            <h2>Контакти</h2>
-            <p>Готові до співпраці.</p>
+        <section class="section">
+            <h2 class="text-3d">Contact</h2>
+            <p>Ready for collaboration. The crystal approaches, symbolizing readiness for dialogue.</p>
         </section>
     </main>
+
+    <div class="social-icons">
+        <a href="https://github.com" target="_blank" class="social-icon"><i class="fab fa-github"></i></a>
+        <a href="https://linkedin.com" target="_blank" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+        <a href="https://telegram.org" target="_blank" class="social-icon"><i class="fab fa-telegram"></i></a>
+    </div>
 
     <script type="module" src="/src/main.js"></script>
 </body>

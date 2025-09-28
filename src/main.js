@@ -1,8 +1,5 @@
 import * as THREE from 'three';
 import { HDRLoader } from 'three/examples/jsm/loaders/HDRLoader.js';
-import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js';
-import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js';
-import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass.js';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -13,12 +10,14 @@ const sizes = { width: window.innerWidth, height: window.innerHeight };
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 100);
 camera.position.z = 3;
+scene.add(camera);
 const canvas = document.querySelector('canvas.webgl');
-const renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true });
+const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true });
 renderer.setSize(sizes.width, sizes.height);
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
-// ## 2. HDRI та Освітлення
+
+// ## 2. ПОВЕРТАЄМО СВІТЛО ТА HDRI // <-- ПОВЕРНУЛИ
 const hdrLoader = new HDRLoader();
 hdrLoader.load('/textures/studio.hdr', (texture) => {
     texture.mapping = THREE.EquirectangularReflectionMapping;
@@ -30,24 +29,83 @@ scene.add(directionalLight);
 const ambientLight = new THREE.AmbientLight(0xffffff, 0.3);
 scene.add(ambientLight);
 
-// ## 3. Кристал
+
+// ## 3. ПОВЕРТАЄМО РЕАЛІСТИЧНИЙ МАТЕРІАЛ КРИСТАЛА // <-- ПОВЕРНУЛИ
 const crystalGeometry = new THREE.IcosahedronGeometry(1, 0);
+
+// Замінюємо червоний каркас на наш фінальний матеріал з відблиском
 const crystalMaterial = new THREE.MeshPhysicalMaterial({
     transmission: 1.0, 
-    roughness: 0.05, 
+    roughness: 0.02, 
     metalness: 0.0, 
     ior: 2.417,
     thickness: 2.0, 
     color: 0xffffff, 
     clearcoat: 1.0, 
-    clearcoatRoughness: 0.1,
+    clearcoatRoughness: 0.05,
     attenuationColor: new THREE.Color(0x7700ff), 
-    attenuationDistance: 1.0
+    attenuationDistance: 1.0,
+    emissive: new THREE.Color(0x220044), // Додаємо легкий світіння
+    emissiveIntensity: 0.1
 });
+
 const crystal = new THREE.Mesh(crystalGeometry, crystalMaterial);
 scene.add(crystal);
 
-// ## 4. Фон з шейдером - ФІНАЛЬНА ВИПРАВЛЕНА ВЕРСІЯ
+// --- Mouse Interaction ---
+const mouse = { x: 0, y: 0 };
+
+window.addEventListener('mousemove', (event) => {
+  // Оновлюємо координати миші, нормалізуючи їх (значення від -1 до 1)
+  mouse.x = event.clientX / window.innerWidth * 2 - 1;
+  mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+});
+
+// --- GSAP Scroll Animations for each section ---
+
+// Знаходимо всі секції на сторінці
+const sections = gsap.utils.toArray('.section');
+
+sections.forEach((section, index) => {
+  // Знаходимо текстові елементи всередині кожної секції
+  const heading = section.querySelector('h1');
+  const paragraph = section.querySelector('p');
+
+  // Створюємо таймлайн, як і раніше
+  const tl = gsap.timeline({
+    scrollTrigger: {
+      trigger: section,
+      start: 'top center',
+      end: 'bottom center',
+      scrub: 1,
+    }
+  });
+
+  // --- Анімації для кристала (залишаються без змін) ---
+  if (index === 0) {
+    tl.to(crystal.rotation, { y: Math.PI * 0.5, ease: 'none' });
+  } else if (index === 1) {
+    tl.to(crystal.rotation, { x: Math.PI * 0.5, ease: 'none' }, 0);
+    tl.to(camera.position, { z: 5, ease: 'none' }, 0);
+    tl.to(crystal.scale, { x: 1.2, y: 1.2, z: 1.2, ease: 'none' }, 0);
+  } else if (index === 2) {
+    tl.to(camera.position, { z: 3, ease: 'none' }, 0);
+    tl.to(crystal.scale, { x: 1, y: 1, z: 1, ease: 'none' }, 0);
+    tl.to(crystal.material.color, { r: 0.1, g: 0.8, b: 0.9, ease: 'none' }, 0);
+  }
+
+  // --- НОВЕ: Додаємо синхронну анімацію для тексту ---
+  if (heading) {
+    // Анімуємо заголовок: з'являється з прозорості, виїжджаючи знизу
+    tl.from(heading, { autoAlpha: 0, y: 50, ease: 'none' }, 0);
+  }
+  if (paragraph) {
+    // Анімуємо параграф так само, але з невеликою затримкою для ефекту
+    tl.from(paragraph, { autoAlpha: 0, y: 50, delay: 0.1, ease: 'none' }, 0);
+  }
+});
+
+// ## 4. Фон з шейдером (без змін)
 const vertexShader = `
     varying vec2 vUv;
     void main() {
@@ -55,17 +113,13 @@ const vertexShader = `
         gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
     }
 `;
-
 const fragmentShader = `
     uniform float uTime;
     uniform vec2 uResolution;
     varying vec2 vUv;
-
-    // Повна, самодостатня версія функції шуму Simplex Noise
     vec3 mod289(vec3 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
-    vec2 mod289(vec2 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; } // <-- Додано
-    vec3 permute(vec3 x) { return mod289(((x*34.0)+1.0)*x); } // <-- Додано
-
+    vec2 mod289(vec2 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
+    vec3 permute(vec3 x) { return mod289(((x*34.0)+1.0)*x); }
     float snoise(vec2 v) {
         const vec4 C = vec4(0.211324865405187, 0.366025403784439, -0.577350269189626, 0.024390243902439);
         vec2 i  = floor(v + dot(v, C.yy));
@@ -88,7 +142,6 @@ const fragmentShader = `
         g.yz = a0.yz * x12.xz + h.yz * x12.yw;
         return 130.0 * dot(m, g);
     }
-
     void main() {
         vec2 aspectCorrectedUv = vUv * 2.0 - 1.0;
         aspectCorrectedUv.x *= uResolution.x / uResolution.y;
@@ -100,7 +153,7 @@ const fragmentShader = `
         gl_FragColor = vec4(finalColor, 1.0);
     }
 `;
-const backgroundGeometry = new THREE.PlaneGeometry(20, 20);
+const backgroundGeometry = new THREE.PlaneGeometry(50, 50);
 const backgroundMaterial = new THREE.ShaderMaterial({
     vertexShader: vertexShader, fragmentShader: fragmentShader,
     uniforms: {
@@ -112,35 +165,34 @@ const backgroundMesh = new THREE.Mesh(backgroundGeometry, backgroundMaterial);
 backgroundMesh.position.z = -5;
 scene.add(backgroundMesh);
 
-// ## 5. Пост-обробка
-const composer = new EffectComposer(renderer);
-const renderPass = new RenderPass(scene, camera);
-composer.addPass(renderPass);
-const bloomPass = new UnrealBloomPass(new THREE.Vector2(sizes.width, sizes.height), 0.8, 0.6, 0.9);
-composer.addPass(bloomPass);
 
-// ## 6. Анімація на скрол
-const tl = gsap.timeline({ scrollTrigger: { trigger: '.content', scrub: 1.5, start: 'top top', end: 'bottom bottom' } });
-tl.to(crystal.rotation, { x: 1, y: 1.5, duration: 4 }, 0);
-tl.to(camera.position, { z: 2.5, duration: 4 }, 0);
-tl.to(crystal.scale, { x: 1.2, y: 1.2, z: 1.2, duration: 4 }, 0);
-
-// ## 7. Цикл рендерингу
+// ## 5. Цикл рендерингу
 const clock = new THREE.Clock();
+
 const tick = () => {
     const elapsedTime = clock.getElapsedTime();
     backgroundMaterial.uniforms.uTime.value = elapsedTime;
+
+    // --- НОВЕ: Плавне слідування за мишкою ---
+    // Визначаємо цільовий кут повороту на основі позиції миші
+    const targetRotationX = mouse.y * 0.3; // Множник 0.3 зменшує амплітуду
+    const targetRotationY = mouse.x * 0.3;
+
+    // Плавно наближаємо поточний поворот до цільового
+    // (постійне обчислення створює ефект м'якого "доведення")
+    crystal.rotation.x += (targetRotationX - crystal.rotation.x) * 0.05;
+    crystal.rotation.y += (targetRotationY - crystal.rotation.y) * 0.05;
     
-    // Відновлюємо базове обертання кристала
-    crystal.rotation.x = elapsedTime * 0.15;
-    crystal.rotation.y = elapsedTime * 0.15;
-    
-    composer.render();
+    // Рендеримо сцену
+    renderer.render(scene, camera);
+
+    // Продовжуємо цикл
     window.requestAnimationFrame(tick);
 };
+
 tick();
 
-// ## 8. Адаптивність
+// ## 6. Адаптивність
 window.addEventListener('resize', () => {
     sizes.width = window.innerWidth;
     sizes.height = window.innerHeight;
@@ -148,7 +200,12 @@ window.addEventListener('resize', () => {
     camera.updateProjectionMatrix();
     renderer.setSize(sizes.width, sizes.height);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    composer.setSize(sizes.width, sizes.height);
-    composer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     backgroundMaterial.uniforms.uResolution.value.set(sizes.width, sizes.height);
 });
+
+// FIX: Показуємо текст для першої секції одразу при завантаженні сторінки
+gsap.set('.section:first-of-type h1, .section:first-of-type p', { opacity: 1 });
+
+// Показуємо текст для всіх секцій при скролі
+gsap.set('.section:nth-of-type(2) h2, .section:nth-of-type(2) p', { opacity: 1 });
+gsap.set('.section:nth-of-type(3) h2, .section:nth-of-type(3) p', { opacity: 1 });

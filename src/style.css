@@ -24,7 +24,7 @@ body {
 }
 
 section {
-    display: flex;
+  display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -47,4 +47,117 @@ h2 {
 p {
     font-size: 1.2rem;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); /* Додаємо тінь для кращої читабельності */
+}
+
+.section:last-child {
+    margin-bottom: 90vh; /* Збільшили значення */
+}
+
+/* Адаптивність для мобільних пристроїв */
+@media (max-width: 600px) {
+    h1 {
+        font-size: 2.5rem;
+    }
+    
+    h2 {
+        font-size: 2rem;
+    }
+    
+    p {
+        font-size: 1rem;
+    }
+    
+    section {
+        padding: 1rem;
+    }
+}
+
+/* --- Social Icons --- */
+.social-icons {
+    position: fixed; /* Фіксуємо їх на екрані */
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 30px; /* Відстань між іконками */
+    z-index: 10; /* Переконуємось, що вони над 3D-сценою */
+}
+
+.social-icon {
+    font-size: 28px;
+    color: #c9c9c9;
+    text-decoration: none;
+    transition: all 0.3s ease-in-out;
+}
+
+.social-icon:hover {
+    color: #fff;
+    transform: translateY(-5px) scale(1.1); /* Ефект "підстрибування" при наведенні */
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.8); /* Додаємо сяйво */
+}
+
+/* --- Z-index Layering Fix --- */
+
+/* 1. Відправляємо canvas на задній план */
+canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1; /* Шар №1 */
+}
+
+/* 2. Виносимо текстові секції на передній план */
+.section {
+    position: relative; /* Обов'язково для роботи z-index */
+    z-index: 10; /* Шар №10 (вище за canvas) */
+}
+
+/* 3. Виносимо іконки на той самий передній план */
+.social-icons {
+    z-index: 10; /* Шар №10 */
+}
+
+/* --- 3D Text Effect --- */
+.text-3d {
+    font-weight: bold !important;
+    font-size: 4rem !important; /* Можете налаштувати розмір за смаком */
+    color: #81f5ff !important; /* Яскравий колір для "верхнього" шару тексту */
+    
+    /* ОСНОВНИЙ СЕКРЕТ: багатошарова тінь для створення глибини */
+    text-shadow:
+        0px 1px 0px #70d7e0,
+        0px 2px 0px #60bac2,
+        0px 3px 0px #509da3,
+        0px 4px 0px #408085,
+        5px 8px 15px rgba(0, 0, 0, 0.3) !important; /* Фінальна м'яка тінь для об'єму */
+
+    /* Додаємо перспективу та нахил */
+    transform: perspective(500px) rotateX(15deg) !important;
+    transition: transform 0.3s ease;
+}
+
+/* Інтерактивний ефект при наведенні миші */
+.text-3d:hover {
+    transform: perspective(500px) rotateX(0deg); /* Повертаємо текст у пряме положення */
+}
+
+/* --- FIX: Z-index Layering --- */
+
+/* Відправляємо canvas на найнижчий шар */
+canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1; 
+}
+
+/* Виносимо весь контент (секції та іконки) на вищий шар */
+.section {
+    position: relative; /* Це важливо для роботи z-index */
+    z-index: 10;
+}
+
+.social-icons {
+    position: fixed; /* Зберігаємо fixed для іконок */
+    z-index: 10;
 }
