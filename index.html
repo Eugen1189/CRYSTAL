@@ -649,6 +649,161 @@
                 font-size: 0.9rem;
             }
         }
+
+        /* --- Enhanced Mobile Responsiveness --- */
+        
+        /* Tablets and small laptops - improved project display */
+        @media (max-width: 1024px) {
+            .welcome-pillars {
+                gap: 2rem;
+                max-width: 800px;
+            }
+            
+            .project-tree {
+                gap: 2rem;
+                margin-top: 4rem;
+            }
+            
+            .project-title {
+                font-size: 1.6rem;
+            }
+        }
+        
+        /* Mobile devices - enhanced project tree */
+        @media (max-width: 768px) {
+            /* Enhanced typography for better readability */
+            h1.text-3d {
+                font-size: 3rem;
+                line-height: 1.2;
+            }
+            
+            /* Improved welcome pillars layout */
+            .welcome-pillars {
+                flex-direction: column;
+                gap: 2rem;
+                margin-top: 2rem;
+            }
+            
+            .pillar {
+                flex-basis: 100%;
+            }
+            
+            /* Enhanced project tree for mobile */
+            .project-tree {
+                flex-direction: column;
+                gap: 1.5rem;
+                margin-top: 2rem;
+                padding: 0 1rem;
+            }
+            
+            .project-branch {
+                width: 100%;
+                padding: 1.5rem;
+                background: rgba(255, 255, 255, 0.05);
+                border-radius: 15px;
+                backdrop-filter: blur(10px);
+                border: 1px solid rgba(255, 255, 255, 0.1);
+                transition: all 0.3s ease;
+            }
+            
+            .project-branch:hover {
+                background: rgba(255, 255, 255, 0.08);
+                transform: translateY(-2px);
+                box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+            }
+            
+            .project-title {
+                font-size: 1.4rem;
+                margin-top: 0;
+                margin-bottom: 1rem;
+                text-align: center;
+            }
+            
+            /* Make project details always visible on mobile */
+            .project-details {
+                position: static;
+                opacity: 1;
+                visibility: visible;
+                transform: none;
+                width: 100%;
+                left: auto;
+                margin-top: 1rem;
+                padding: 1rem 0;
+            }
+            
+            /* Hide the connecting line on mobile */
+            .project-details::before {
+                display: none;
+            }
+            
+            /* Improved tech leaves display */
+            .project-tech-leaves {
+                margin-top: 1rem;
+                display: flex;
+                flex-wrap: wrap;
+                gap: 0.5rem;
+                justify-content: center;
+            }
+            
+            .project-tech-leaves span {
+                font-size: 0.8rem;
+                padding: 6px 12px;
+                margin-bottom: 0;
+                display: inline-block;
+                background: rgba(255, 255, 255, 0.1);
+                border-radius: 20px;
+                border: 1px solid rgba(255, 255, 255, 0.2);
+                opacity: 1;
+                transition: all 0.3s ease;
+            }
+            
+            .project-tech-leaves span:hover {
+                background: rgba(255, 255, 255, 0.15);
+                transform: scale(1.05);
+            }
+            
+            /* Hide individual leaf connections on mobile */
+            .project-tech-leaves span::before {
+                display: none;
+            }
+        }
+        
+        /* Small mobile devices - further optimizations */
+        @media (max-width: 480px) {
+            h1.text-3d {
+                font-size: 2.5rem;
+            }
+            
+            .project-branch {
+                padding: 1rem;
+                margin: 0.5rem 0;
+            }
+            
+            .project-title {
+                font-size: 1.2rem;
+            }
+            
+            .project-tech-leaves span {
+                font-size: 0.75rem;
+                padding: 4px 8px;
+            }
+            
+            .welcome-pillars {
+                gap: 1.5rem;
+            }
+            
+            .pillar i {
+                font-size: 2rem;
+            }
+            
+            .pillar h3 {
+                font-size: 1.2rem;
+            }
+            
+            .pillar p {
+                font-size: 0.9rem;
+            }
+        }
     </style>
 </head>
 <body>
