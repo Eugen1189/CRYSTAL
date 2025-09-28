@@ -2,10 +2,12 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
     <title>Crystal Portfolio</title>
-
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    
+    <link rel="icon" type="image/jpeg" href="/photo_5388727340252658670_y.jpg" />
+    <link rel="shortcut icon" type="image/jpeg" href="/photo_5388727340252658670_y.jpg" />
+    <link rel="apple-touch-icon" href="/photo_5388727340252658670_y.jpg" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -22,7 +24,64 @@
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             color: #E8E8E8;
             /* Add dark background to avoid white screen during loading */
-            background-color: #0c001a; 
+            background-color: #0c001a;
+            /* Performance optimizations */
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            text-rendering: optimizeLegibility;
+            /* Mobile optimizations */
+            -webkit-text-size-adjust: 100%;
+            -ms-text-size-adjust: 100%;
+            overflow-x: hidden;
+        }
+
+        /* --- Preloader --- */
+        #preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            z-index: 100; /* Має бути над усіма іншими елементами */
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            background-color: #0d1a44; /* Фон, взятий з вашого логотипу */
+            
+            /* Плавний перехід для зникнення */
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+
+        #preloader img {
+            max-width: 350px; /* ЗБІЛЬШИЛИ: було 250px */
+            border-radius: 25px; /* Заокруглені кути логотипа */
+            
+            /* Змінюємо тривалість анімації з 2s на 3s */
+            animation: pulse 3s ease-in-out infinite; 
+        }
+
+        /* Клас для приховування прелоадера */
+        #preloader.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        /* Анімація "пульсації" */
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1.05);
+                opacity: 0.85;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
         }
 
         /* Pin canvas to background so it doesn't move */
@@ -31,6 +90,10 @@
             top: 0;
             left: 0;
             outline: none;
+            /* Performance optimizations */
+            will-change: transform;
+            transform: translateZ(0);
+            backface-visibility: hidden;
         }
 
         /* Styles for content that will scroll */
@@ -52,7 +115,7 @@
         h1 {
             font-family: 'Unbounded', sans-serif;
             font-weight: 900;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #4ecdc4 0%, #45b7d1 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -60,7 +123,7 @@
             /* Ось магія 3D-ефекту */
             text-shadow:
                 2px 2px 4px rgba(0, 0, 0, 0.8),
-                0 0 20px rgba(102, 126, 234, 0.3);
+                0 0 20px rgba(78, 205, 196, 0.4);
             opacity: 1; /* Показуємо перший заголовок */
         }
 
@@ -119,7 +182,288 @@
             text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
         }
 
+        /* --- Project Tree Styles --- */
+
+        /* 1. Головний контейнер для дерева */
+        .project-tree {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 5rem;
+            text-align: center;
+        }
+
+        /* 2. Кожна окрема гілка */
+        .project-branch {
+            position: relative; /* Важливо для позиціонування гілок */
+            width: 30%;
+        }
+
+        .project-title {
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #4ecdc4 0%, #45b7d1 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8), 0 0 8px rgba(78, 205, 196, 0.3);
+            text-align: center;
+        }
+
+        .project-title:first-of-type {
+            margin-top: 1.5rem;
+        }
+
+        /* 3. Деталі, що сховані за замовчуванням */
+        .project-details {
+            position: absolute;
+            top: 120%; /* Розміщуємо під заголовком */
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            
+            /* Ховаємо блок */
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.4s ease, visibility 0.4s ease;
+        }
+
+        /* 4. Магія при наведенні */
+        .project-branch:hover .project-title {
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8), 0 0 15px rgba(78, 205, 196, 0.6);
+            transform: scale(1.05);
+        }
+
+        .project-branch:hover .project-details {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* 5. Малюємо "гілки" за допомогою псевдо-елементів */
+        .project-details::before {
+            content: '';
+            position: absolute;
+            bottom: 100%; /* Від нижнього краю блоку */
+            left: 50%;
+            transform: translateX(-50%);
+            
+            width: 2px;
+            height: 30px; /* Довжина гілки */
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .project-tech-leaves {
+            margin-top: 1.5rem;
+            position: relative;
+        }
+
+        .project-tech-leaves span {
+            display: block;
+            margin-bottom: 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 5px 10px;
+            border-radius: 5px;
+            position: relative;
+
+            /* Анімація появи "листочків" */
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        /* Плавна поява кожного "листочка" по черзі */
+        .project-branch:hover .project-tech-leaves span {
+            opacity: 1;
+        }
+        .project-branch:hover .project-tech-leaves span:nth-child(1) { transition-delay: 0.2s; }
+        .project-branch:hover .project-tech-leaves span:nth-child(2) { transition-delay: 0.3s; }
+        .project-branch:hover .project-tech-leaves span:nth-child(3) { transition-delay: 0.4s; }
+        .project-branch:hover .project-tech-leaves span:nth-child(4) { transition-delay: 0.5s; }
+
+        /* Гілки до "листочків" */
+        .project-tech-leaves span::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            right: 100%; /* Від правого краю "листочка" */
+            
+            width: 20px; /* Довжина гілочки */
+            height: 2px;
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+
+        /* --- Welcome Pillars Styles --- */
+        .welcome-pillars {
+            display: flex;
+            justify-content: center;
+            gap: 3rem; /* Відстань між блоками */
+            margin-top: 3rem;
+            max-width: 1000px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .pillar {
+            flex-basis: 30%; /* Кожен блок займає приблизно третину місця */
+            text-align: center;
+        }
+
+        /* Стиль для іконок */
+        .pillar i {
+            font-size: 2.5rem;
+            color: #81f5ff; /* Колір акценту, який ми вже використовували */
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+            text-shadow: 0 0 10px rgba(129, 245, 255, 0.3);
+        }
+
+        /* Hover ефекти для іконок */
+        .pillar:hover i {
+            transform: translateY(-5px) scale(1.1);
+            text-shadow: 0 0 20px rgba(129, 245, 255, 0.6);
+        }
+
+        /* Специфічні кольори для кожної іконки */
+        .pillar:nth-child(1) i {
+            color: #ff6b9d; /* Рожевий для палітри (дизайн) */
+            text-shadow: 0 0 10px rgba(255, 107, 157, 0.3);
+        }
+
+        .pillar:nth-child(1):hover i {
+            color: #ff6b9d;
+            text-shadow: 0 0 20px rgba(255, 107, 157, 0.6);
+        }
+
+        .pillar:nth-child(2) i {
+            color: #4ecdc4; /* Бірюзовий для коду */
+            text-shadow: 0 0 10px rgba(78, 205, 196, 0.3);
+        }
+
+        .pillar:nth-child(2):hover i {
+            color: #4ecdc4;
+            text-shadow: 0 0 20px rgba(78, 205, 196, 0.6);
+        }
+
+        .pillar:nth-child(3) i {
+            color: #45b7d1; /* Блакитний для інновацій */
+            text-shadow: 0 0 10px rgba(69, 183, 209, 0.3);
+        }
+
+        .pillar:nth-child(3):hover i {
+            color: #45b7d1;
+            text-shadow: 0 0 20px rgba(69, 183, 209, 0.6);
+        }
+
+        .pillar h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: #fff;
+        }
+
+        .pillar p {
+            font-size: 1rem;
+            color: #ccc;
+            line-height: 1.6;
+        }
+
+        /* Стилі для підзаголовка */
+        .subtitle {
+            font-size: 1.2rem;
+            color: #E8E8E8;
+            text-align: center;
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Hover ефекти для стовпів */
+        .pillar:hover h3 {
+            color: #81f5ff;
+            text-shadow: 0 0 10px rgba(129, 245, 255, 0.5);
+        }
+
+        .pillar:hover p {
+            color: #fff;
+        }
+
+        /* --- Interactive Contact Block --- */
+        .copy-email-container {
+            position: relative; /* Для позиціонування повідомлення */
+            display: inline-flex; /* Розміщуємо email та кнопку в ряд */
+            align-items: center;
+            
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            padding: 10px 20px;
+            margin-top: 2rem;
+        }
+
+        #email-text {
+            font-size: 1.2rem;
+            color: #fff;
+            margin-right: 15px;
+        }
+
+        #copy-button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.2rem;
+            color: #ccc;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+
+        #copy-button:hover {
+            color: #81f5ff; /* Колір акценту */
+            transform: scale(1.1);
+        }
+
+        /* Повідомлення про успішне копіювання */
+        #confirmation-message {
+            position: absolute;
+            top: -45px; /* З'являється над блоком */
+            left: 50%;
+            transform: translateX(-50%);
+            
+            background-color: #25D366; /* Зелений колір успіху */
+            color: #fff;
+            padding: 5px 15px;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            
+            /* Ховаємо за замовчуванням */
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        /* Клас для показу повідомлення */
+        #confirmation-message.show {
+            opacity: 1;
+            visibility: visible;
+            top: -55px; /* Ефект "вистрибування" */
+        }
+
+
         /* --- Адаптивність для мобільних пристроїв --- */
+        
+        /* Tablets and small laptops */
+        @media (max-width: 1024px) {
+            .welcome-pillars {
+                gap: 2rem;
+                max-width: 800px;
+            }
+            
+            .project-tree {
+                gap: 2rem;
+                margin-top: 4rem;
+            }
+        }
+        
+        /* Mobile devices */
         @media (max-width: 768px) {
             h1 { font-size: 3em; }
             h2 { font-size: 2.5em; }
@@ -141,24 +485,239 @@
             .social-icon {
                 font-size: 24px; /* Зменшуємо розмір іконок */
             }
+            
+            .project-tree {
+                flex-direction: column;
+                gap: 2rem;
+                margin-top: 2rem;
+            }
+            
+            .project-branch {
+                width: 100%;
+                padding: 1rem;
+                background: rgba(255, 255, 255, 0.05);
+                border-radius: 10px;
+                backdrop-filter: blur(5px);
+            }
+            
+            .project-title {
+                font-size: 1.3rem;
+                margin-top: 0;
+                margin-bottom: 1rem;
+            }
+            
+            .project-details {
+                position: static;
+                opacity: 1;
+                visibility: visible;
+                transform: none;
+                width: 100%;
+                left: auto;
+                margin-top: 1rem;
+            }
+            
+            .project-details::before {
+                display: none;
+            }
+            
+            .project-tech-leaves {
+                margin-top: 1rem;
+            }
+            
+            .project-tech-leaves span {
+                font-size: 0.75em;
+                padding: 4px 8px;
+                margin-bottom: 0.5rem;
+                display: inline-block;
+                margin-right: 0.5rem;
+            }
+            
+            .welcome-pillars {
+                flex-direction: column;
+                gap: 2rem;
+                margin-top: 2rem;
+            }
+            
+            .pillar {
+                flex-basis: 100%;
+            }
+            
+            .pillar i {
+                font-size: 2rem;
+            }
+            
+            .pillar h3 {
+                font-size: 1.3rem;
+            }
+            
+            .pillar p {
+                font-size: 0.9rem;
+            }
+            
+            .copy-email-container {
+                padding: 8px 16px;
+                margin-top: 1.5rem;
+            }
+            
+            #email-text {
+                font-size: 1rem;
+                margin-right: 10px;
+            }
+            
+            #copy-button {
+                font-size: 1rem;
+            }
+            
+            #confirmation-message {
+                top: -40px;
+                font-size: 0.8rem;
+                padding: 4px 12px;
+            }
+            
+            #confirmation-message.show {
+                top: -50px;
+            }
+        }
+        
+        /* Small mobile devices */
+        @media (max-width: 480px) {
+            h1 { font-size: 2.5em; }
+            h2 { font-size: 2em; }
+            
+            .section {
+                padding: 0.5rem;
+            }
+            
+            .welcome-pillars {
+                gap: 1.5rem;
+                margin-top: 1.5rem;
+            }
+            
+            .pillar i {
+                font-size: 2rem;
+            }
+            
+            .pillar h3 {
+                font-size: 1.2rem;
+            }
+            
+            .pillar p {
+                font-size: 0.9rem;
+            }
+            
+            .project-title {
+                font-size: 1.1rem;
+            }
+            
+            .project-branch {
+                padding: 0.8rem;
+            }
+            
+            .social-icons {
+                gap: 15px;
+                bottom: 15px;
+            }
+            
+            .social-icon {
+                font-size: 20px;
+            }
+            
+            .copy-email-container {
+                padding: 6px 12px;
+            }
+            
+            #email-text {
+                font-size: 0.9rem;
+            }
         }
     </style>
 </head>
 <body>
+    <div id="preloader">
+        <img src="photo_5388727340252658670_y.jpg" alt="Loading...">
+    </div>
+
     <canvas class="webgl"></canvas>
 
     <main class="content">
         <section class="section">
-            <h1 class="text-3d">Welcome</h1>
-            <p>Scroll down to witness the magic. The crystal in the background will react to your actions.</p>
+            <h1 class="text-3d">Creating the future through code</h1>
+
+            <div class="welcome-pillars">
+                <div class="pillar">
+                    <i class="fas fa-palette"></i>
+                    <h3>Design</h3>
+                    <p>Creating intuitive and aesthetically appealing interfaces where every detail matters.</p>
+                </div>
+
+                <div class="pillar">
+                    <i class="fas fa-code"></i>
+                    <h3>Code</h3>
+                    <p>Writing clean, efficient and scalable code that forms the foundation of any successful project.</p>
+                </div>
+
+                <div class="pillar">
+                    <i class="fas fa-rocket"></i>
+                    <h3>Innovation</h3>
+                    <p>Implementing cutting-edge technologies to solve complex challenges and create unique solutions.</p>
+                </div>
+            </div>
         </section>
         <section class="section">
-            <h2 class="text-3d">Projects</h2>
-            <p>The crystal transforms as you focus on new information, symbolizing new facets of experience.</p>
+            <h1 class="text-3d">Проєкти</h1>
+
+            <div class="project-tree">
+
+                <div class="project-branch">
+                    <h2 class="project-title">Інтерактивний 3D-Кристал</h2>
+                    <div class="project-details">
+                        <p>Веб-портфоліо з фотореалістичною 3D-моделлю, що реагує на дії користувача.</p>
+                        <div class="project-tech-leaves">
+                            <span>Three.js</span>
+                            <span>GSAP</span>
+                            <span>GLSL</span>
+                            <span>Vite</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-branch">
+                    <h2 class="project-title">LifeVit — Трекер здоров'я</h2>
+                    <div class="project-details">
+                        <p>Веб-додаток для відстеження прийому вітамінів та моніторингу показників здоров'я.</p>
+                        <div class="project-tech-leaves">
+                            <span>React</span>
+                            <span>Node.js</span>
+                            <span>MongoDB</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-branch">
+                    <h2 class="project-title">KALEIDO — Генератор мистецтва</h2>
+                    <div class="project-details">
+                        <p>Інтерактивне полотно для створення генеративної графіки з можливістю експорту в SVG.</p>
+                        <div class="project-tech-leaves">
+                            <span>JavaScript</span>
+                            <span>HTML Canvas</span>
+                            <span>Figma</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
         </section>
         <section class="section">
-            <h2 class="text-3d">Contact</h2>
-            <p>Ready for collaboration. The crystal approaches, symbolizing readiness for dialogue.</p>
+            <h1 class="text-3d">Have an idea?</h1>
+            <p class="subtitle">Let's create something incredible together.</p>
+
+            <div class="copy-email-container">
+                <span id="email-text">mamcijevgen@gmail.com</span>
+                <button id="copy-button" aria-label="Copy email to clipboard">
+                    <i class="far fa-copy"></i>
+                </button>
+                <span id="confirmation-message">Copied!</span>
+            </div>
         </section>
     </main>
 
@@ -166,6 +725,8 @@
         <a href="https://github.com" target="_blank" class="social-icon"><i class="fab fa-github"></i></a>
         <a href="https://linkedin.com" target="_blank" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
         <a href="https://telegram.org" target="_blank" class="social-icon"><i class="fab fa-telegram"></i></a>
+        <a href="https://facebook.com" target="_blank" class="social-icon"><i class="fab fa-facebook"></i></a>
+        <a href="https://wa.me/" target="_blank" class="social-icon"><i class="fab fa-whatsapp"></i></a>
     </div>
 
     <script type="module" src="/src/main.js"></script>

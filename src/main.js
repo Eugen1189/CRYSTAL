@@ -5,6 +5,21 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
 
+// ===== Loading Manager =====
+const loadingManager = new THREE.LoadingManager();
+
+const preloader = document.getElementById('preloader');
+
+// Ця функція виконається, коли ВСІ ресурси будуть завантажені
+loadingManager.onLoad = () => {
+  // Додаємо затримку, щоб краще було видно логотип
+  setTimeout(() => {
+    if (preloader) {
+      preloader.classList.add('hidden');
+    }
+  }, 1500); // 1.5 секунди додаткової затримки
+};
+
 // ## 1. Базові налаштування
 const sizes = { width: window.innerWidth, height: window.innerHeight };
 const scene = new THREE.Scene();
@@ -12,18 +27,29 @@ const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 
 camera.position.z = 3;
 scene.add(camera);
 const canvas = document.querySelector('canvas.webgl');
-const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true });
+const renderer = new THREE.WebGLRenderer({ 
+    canvas: canvas, 
+    alpha: true,
+    antialias: true,
+    powerPreference: "high-performance"
+});
 renderer.setSize(sizes.width, sizes.height);
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
+// Performance optimizations
+renderer.shadowMap.enabled = false; // Disable shadows for better performance
+renderer.outputEncoding = THREE.sRGBEncoding;
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 1;
+
 
 // ## 2. ПОВЕРТАЄМО СВІТЛО ТА HDRI // <-- ПОВЕРНУЛИ
-const hdrLoader = new HDRLoader();
+const hdrLoader = new HDRLoader(loadingManager);
 hdrLoader.load('/textures/studio.hdr', (texture) => {
     texture.mapping = THREE.EquirectangularReflectionMapping;
     scene.environment = texture;
 });
-const directionalLight = new THREE.DirectionalLight(0xffffff, 1.8); 
+const directionalLight = new THREE.DirectionalLight(0xffffff, 1.8);
 directionalLight.position.set(2, 3, 4);
 scene.add(directionalLight);
 const ambientLight = new THREE.AmbientLight(0xffffff, 0.3);
@@ -35,15 +61,15 @@ const crystalGeometry = new THREE.IcosahedronGeometry(1, 0);
 
 // Замінюємо червоний каркас на наш фінальний матеріал з відблиском
 const crystalMaterial = new THREE.MeshPhysicalMaterial({
-    transmission: 1.0, 
-    roughness: 0.02, 
-    metalness: 0.0, 
+    transmission: 1.0,
+    roughness: 0.02,
+    metalness: 0.0,
     ior: 2.417,
-    thickness: 2.0, 
-    color: 0xffffff, 
-    clearcoat: 1.0, 
+    thickness: 2.0,
+    color: 0xffffff,
+    clearcoat: 1.0,
     clearcoatRoughness: 0.05,
-    attenuationColor: new THREE.Color(0x7700ff), 
+    attenuationColor: new THREE.Color(0x7700ff),
     attenuationDistance: 1.0,
     emissive: new THREE.Color(0x220044), // Додаємо легкий світіння
     emissiveIntensity: 0.1
@@ -69,12 +95,12 @@ const sections = gsap.utils.toArray('.section');
 sections.forEach((section, index) => {
   // Знаходимо текстові елементи всередині кожної секції
   const heading = section.querySelector('h1');
-  const paragraph = section.querySelector('p');
+    const paragraph = section.querySelector('p');
 
   // Створюємо таймлайн, як і раніше
-  const tl = gsap.timeline({
-    scrollTrigger: {
-      trigger: section,
+    const tl = gsap.timeline({
+        scrollTrigger: {
+            trigger: section,
       start: 'top center',
       end: 'bottom center',
       scrub: 1,
@@ -87,10 +113,10 @@ sections.forEach((section, index) => {
   } else if (index === 1) {
     tl.to(crystal.rotation, { x: Math.PI * 0.5, ease: 'none' }, 0);
     tl.to(camera.position, { z: 5, ease: 'none' }, 0);
-    tl.to(crystal.scale, { x: 1.2, y: 1.2, z: 1.2, ease: 'none' }, 0);
+        tl.to(crystal.scale, { x: 1.2, y: 1.2, z: 1.2, ease: 'none' }, 0);
   } else if (index === 2) {
-    tl.to(camera.position, { z: 3, ease: 'none' }, 0);
-    tl.to(crystal.scale, { x: 1, y: 1, z: 1, ease: 'none' }, 0);
+        tl.to(camera.position, { z: 3, ease: 'none' }, 0);
+        tl.to(crystal.scale, { x: 1, y: 1, z: 1, ease: 'none' }, 0);
     tl.to(crystal.material.color, { r: 0.1, g: 0.8, b: 0.9, ease: 'none' }, 0);
   }
 
@@ -169,10 +195,15 @@ scene.add(backgroundMesh);
 // ## 5. Цикл рендерингу
 const clock = new THREE.Clock();
 
+// Performance monitoring
+let frameCount = 0;
+let lastTime = performance.now();
+let fps = 60;
+
 const tick = () => {
     const elapsedTime = clock.getElapsedTime();
     backgroundMaterial.uniforms.uTime.value = elapsedTime;
-
+    
     // --- НОВЕ: Плавне слідування за мишкою ---
     // Визначаємо цільовий кут повороту на основі позиції миші
     const targetRotationX = mouse.y * 0.3; // Множник 0.3 зменшує амплітуду
@@ -185,6 +216,15 @@ const tick = () => {
     
     // Рендеримо сцену
     renderer.render(scene, camera);
+
+    // Performance monitoring
+    frameCount++;
+    const currentTime = performance.now();
+    if (currentTime - lastTime >= 1000) {
+        fps = frameCount;
+        frameCount = 0;
+        lastTime = currentTime;
+    }
 
     // Продовжуємо цикл
     window.requestAnimationFrame(tick);
@@ -209,3 +249,28 @@ gsap.set('.section:first-of-type h1, .section:first-of-type p', { opacity: 1 });
 // Показуємо текст для всіх секцій при скролі
 gsap.set('.section:nth-of-type(2) h2, .section:nth-of-type(2) p', { opacity: 1 });
 gsap.set('.section:nth-of-type(3) h2, .section:nth-of-type(3) p', { opacity: 1 });
+
+// --- Copy Email Logic ---
+const copyButton = document.getElementById('copy-button');
+const emailText = document.getElementById('email-text');
+const confirmationMessage = document.getElementById('confirmation-message');
+
+if (copyButton) {
+  copyButton.addEventListener('click', () => {
+    // Отримуємо текст email
+    const email = emailText.innerText;
+    
+    // Використовуємо Clipboard API для копіювання
+    navigator.clipboard.writeText(email).then(() => {
+      // Показуємо повідомлення про успіх
+      confirmationMessage.classList.add('show');
+      
+      // Ховаємо повідомлення через 2 секунди
+      setTimeout(() => {
+        confirmationMessage.classList.remove('show');
+      }, 2000);
+    }).catch(err => {
+      console.error('Failed to copy: ', err);
+    });
+  });
+}
