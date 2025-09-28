@@ -669,57 +669,64 @@
             }
         }
         
-        /* Mobile devices - enhanced project tree */
+        /* Mobile devices - completely rebuilt for better readability */
         @media (max-width: 768px) {
-            /* Enhanced typography for better readability */
+            /* 1. General improvements for readability */
+            .section {
+                padding: 2rem 1rem; /* Add more "air" on the sides */
+            }
+
             h1.text-3d {
-                font-size: 3rem;
+                font-size: 2.8rem;
                 line-height: 1.2;
             }
             
-            /* Improved welcome pillars layout */
+            /* 2. Fixes for "Welcome" section */
             .welcome-pillars {
                 flex-direction: column;
-                gap: 2rem;
-                margin-top: 2rem;
+                gap: 2.5rem; /* Increase spacing */
+                margin-top: 4rem;
             }
-            
+
             .pillar {
                 flex-basis: 100%;
             }
-            
-            /* Enhanced project tree for mobile */
+
+            /* 3. COMPLETE REBUILD OF "PROJECTS" SECTION */
             .project-tree {
                 flex-direction: column;
-                gap: 1.5rem;
-                margin-top: 2rem;
+                gap: 2rem;
+                margin-top: 3rem;
                 padding: 0 1rem;
             }
-            
+
             .project-branch {
                 width: 100%;
-                padding: 1.5rem;
+                padding: 2rem 1.5rem;
                 background: rgba(255, 255, 255, 0.05);
                 border-radius: 15px;
                 backdrop-filter: blur(10px);
                 border: 1px solid rgba(255, 255, 255, 0.1);
-                transition: all 0.3s ease;
+                cursor: default; /* Remove pointer cursor */
+                transition: none; /* Disable hover animations */
             }
             
+            /* DISABLE HOVER EFFECTS COMPLETELY */
             .project-branch:hover {
-                background: rgba(255, 255, 255, 0.08);
-                transform: translateY(-2px);
-                box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+                background: rgba(255, 255, 255, 0.05); /* Keep same background */
+                transform: none; /* No movement */
+                box-shadow: none; /* No shadow changes */
             }
-            
+
             .project-title {
-                font-size: 1.4rem;
+                font-size: 1.5rem;
                 margin-top: 0;
-                margin-bottom: 1rem;
+                margin-bottom: 1.5rem;
                 text-align: center;
+                color: #fff; /* Always white, no color change */
             }
-            
-            /* Make project details always visible on mobile */
+
+            /* ALWAYS VISIBLE PROJECT DETAILS */
             .project-details {
                 position: static;
                 opacity: 1;
@@ -728,43 +735,53 @@
                 width: 100%;
                 left: auto;
                 margin-top: 1rem;
-                padding: 1rem 0;
+                padding: 0;
+                background: none; /* Remove background */
+                backdrop-filter: none;
+                border: none;
+                transition: none; /* Disable animation */
             }
-            
-            /* Hide the connecting line on mobile */
+
+            /* Hide connecting line */
             .project-details::before {
                 display: none;
             }
-            
-            /* Improved tech leaves display */
+
+            /* Always visible tech tags */
             .project-tech-leaves {
-                margin-top: 1rem;
+                margin-top: 1.5rem;
                 display: flex;
                 flex-wrap: wrap;
                 gap: 0.5rem;
                 justify-content: center;
+                padding-left: 0;
             }
-            
+
             .project-tech-leaves span {
-                font-size: 0.8rem;
-                padding: 6px 12px;
+                font-size: 0.85rem;
+                padding: 8px 16px;
                 margin-bottom: 0;
                 display: inline-block;
                 background: rgba(255, 255, 255, 0.1);
                 border-radius: 20px;
                 border: 1px solid rgba(255, 255, 255, 0.2);
-                opacity: 1;
-                transition: all 0.3s ease;
+                opacity: 1; /* Always visible */
+                transition: none; /* No hover effects */
             }
-            
-            .project-tech-leaves span:hover {
-                background: rgba(255, 255, 255, 0.15);
-                transform: scale(1.05);
-            }
-            
-            /* Hide individual leaf connections on mobile */
+
+            /* Hide individual leaf connections */
             .project-tech-leaves span::before {
                 display: none;
+            }
+
+            /* Social icons adjustments */
+            .social-icons {
+                gap: 20px;
+                bottom: 20px;
+            }
+            
+            .social-icon {
+                font-size: 24px;
             }
         }
         
