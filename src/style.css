@@ -1,0 +1,50 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    color: white;
+}
+
+/* Прибиваємо canvas до фону, щоб він не рухався */
+.webgl {
+    position: fixed;
+    top: 0;
+    left: 0;
+    outline: none;
+}
+
+/* Стилі для контенту, який буде скролитись */
+.content {
+    position: relative; /* Щоб був над canvas */
+    z-index: 10; /* Збільшуємо z-index, щоб текст був поверх 3D сцени */
+}
+
+section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Кожна секція на висоту екрана */
+    padding: 2rem;
+    position: relative;
+    z-index: 10; /* Додаємо z-index для секцій */
+}
+
+h1 {
+    font-size: 4rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Додаємо тінь для кращої читабельності */
+}
+
+h2 {
+    font-size: 3rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Додаємо тінь для кращої читабельності */
+}
+
+p {
+    font-size: 1.2rem;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); /* Додаємо тінь для кращої читабельності */
+}
