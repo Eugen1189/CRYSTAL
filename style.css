@@ -1,0 +1,111 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    background-color: #0c001a;
+    overflow-x: hidden; /* Запобігаємо горизонтальному скролу */
+    scroll-behavior: smooth; /* Плавна прокрутка */
+    cursor: default; /* Стандартний курсор */
+}
+
+/* --- Базові шари --- */
+.webgl {
+    position: fixed;
+    top: 0;
+    left: 0;
+    outline: none;
+    z-index: 1; /* Фон */
+    image-rendering: optimizeSpeed; /* Оптимізація рендерингу */
+}
+
+.content {
+    position: relative;
+    z-index: 10; /* Контент над фоном */
+}
+
+/* --- Секції та текст --- */
+.section {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative; /* Додаємо relative для створення контексту позиціонування */
+}
+
+/* Спільні стилі для всіх заголовків */
+h1, h2 {
+    font-family: 'Unbounded', sans-serif;
+    font-weight: 900;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow:
+        2px 2px 4px rgba(0, 0, 0, 0.8),
+        0 0 20px rgba(102, 126, 234, 0.3);
+    opacity: 0; /* ВАЖЛИВО: Ховаємо за замовчуванням для анімації */
+    visibility: hidden; /* Додатково для GSAP */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    width: 100%;
+    margin: 0;
+    z-index: 5;
+}
+
+h1 { font-size: 5em; }
+h2 { font-size: 4em; }
+
+p {
+    font-family: 'Unbounded', sans-serif;
+    font-weight: 300;
+    background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    position: absolute;
+    top: 62%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    max-width: 500px;
+    text-align: center;
+    line-height: 1.5;
+    text-shadow: 
+        0px 1px 2px rgba(0, 0, 0, 0.7),
+        0px 0px 4px rgba(0, 0, 0, 0.5);
+    opacity: 0; /* ВАЖЛИВО: Ховаємо за замовчуванням для анімації */
+    visibility: hidden; /* Додатково для GSAP */
+}
+
+/* --- Іконки --- */
+.social-icons {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 30px;
+    z-index: 10;
+}
+
+.social-icon {
+    font-size: 28px;
+    color: #c9c9c9;
+    text-decoration: none;
+    transition: all 0.3s ease-in-out;
+    display: inline-block;
+    padding: 5px; /* Додаємо padding для більшої області кліку */
+}
+
+.social-icon:hover {
+    color: #fff;
+    transform: translateY(-5px) scale(1.1);
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+}
