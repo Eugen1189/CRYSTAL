@@ -230,19 +230,23 @@
         .about-section {
             display: flex;
             align-items: center;
-            gap: 4rem; /* Відстань між фото та текстом */
-            padding: 6rem 0; /* Більше "повітря" зверху та знизу */
+            gap: 4rem;
+            padding: 6rem 0;
+
+            /* Обмежуємо ширину секції для кращої читабельності */
+            max-width: 1100px;
+            margin: 0 auto; /* Центруємо секцію на сторінці */
         }
 
         .about-photo-container {
-            flex-basis: 35%; /* Фото займає приблизно третину блоку */
+            flex-basis: 40%;
             flex-shrink: 0;
         }
 
         .about-photo-container img {
             width: 100%;
-            border-radius: 10px;
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+            border-radius: 15px; /* Трохи більший радіус */
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3); /* Більш виражена тінь */
             transition: transform 0.3s ease;
         }
 
