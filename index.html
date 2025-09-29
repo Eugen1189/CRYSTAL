@@ -226,25 +226,23 @@
             color: #0d1a44;
         }
 
-        /* About Section Styles */
+        /* --- New About Me Section Styles --- */
         .about-section {
             display: flex;
             align-items: center;
-            gap: 4rem;
-            padding: 4rem 2rem;
-            min-height: 80vh;
+            gap: 4rem; /* Відстань між фото та текстом */
+            padding: 6rem 0; /* Більше "повітря" зверху та знизу */
         }
 
         .about-photo-container {
-            flex: 1;
-            max-width: 400px;
+            flex-basis: 35%; /* Фото займає приблизно третину блоку */
+            flex-shrink: 0;
         }
 
         .about-photo-container img {
             width: 100%;
-            height: auto;
-            border-radius: 20px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
             transition: transform 0.3s ease;
         }
 
@@ -253,36 +251,35 @@
         }
 
         .about-text-container {
-            flex: 1;
-            max-width: 600px;
+            flex-basis: 65%;
+            text-align: left; /* Вирівнюємо текст по лівому краю */
         }
 
         .section-title {
             font-family: 'Unbounded', sans-serif;
             font-weight: 900;
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            color: #fff;
             background: linear-gradient(135deg, #4ecdc4 0%, #45b7d1 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            font-size: 3rem;
-            margin-bottom: 2rem;
-            text-shadow: none;
         }
 
         .about-story {
             font-family: 'Unbounded', sans-serif;
             font-weight: 400;
-            color: #E8E8E8;
-            font-size: 1.2rem;
-            line-height: 1.8;
-            margin-bottom: 3rem;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+            font-size: 1.1rem;
+            line-height: 1.7;
+            color: #ccc;
+            margin-bottom: 2.5rem;
         }
 
         .skill-groups {
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr; /* Дві колонки для навичок */
+            gap: 2rem;
         }
 
         .skill-group {
@@ -303,19 +300,18 @@
         .skill-group h3 {
             font-family: 'Unbounded', sans-serif;
             font-weight: 600;
-            color: #81f5ff;
             font-size: 1.1rem;
+            color: #81f5ff; /* Колір акценту */
             margin-bottom: 0.5rem;
-            text-shadow: 0 0 10px rgba(129, 245, 255, 0.3);
         }
 
         .skill-group p {
             font-family: 'Unbounded', sans-serif;
             font-weight: 400;
-            color: #ccc;
-            font-size: 1rem;
-            line-height: 1.6;
             margin: 0;
+            color: #ccc;
+            line-height: 1.5;
+            font-size: 1rem;
         }
 
         h2 {
@@ -880,17 +876,18 @@
             .about-section {
                 flex-direction: column;
                 gap: 2rem;
-                padding: 2rem 1rem;
-                min-height: auto;
+                padding: 3rem 1rem;
             }
 
             .about-photo-container {
+                flex-basis: auto;
                 max-width: 300px;
                 order: 2;
             }
 
             .about-text-container {
-                max-width: 100%;
+                flex-basis: auto;
+                text-align: center;
                 order: 1;
             }
 
@@ -905,6 +902,8 @@
             }
 
             .skill-groups {
+                display: flex;
+                flex-direction: column;
                 gap: 1rem;
             }
 
@@ -1053,7 +1052,7 @@
 
             /* About section small mobile styles */
             .about-section {
-                padding: 1.5rem 0.5rem;
+                padding: 2rem 0.5rem;
                 gap: 1.5rem;
             }
 
@@ -1067,6 +1066,10 @@
 
             .about-story {
                 font-size: 1rem;
+            }
+
+            .skill-groups {
+                gap: 0.8rem;
             }
 
             .skill-group {
