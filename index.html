@@ -226,47 +226,45 @@
             color: #0d1a44;
         }
 
-        /* --- New About Me Section Styles --- */
+        /* --- Final Professional "About Me" Section --- */
         .about-section {
-            display: flex; /* Вмикаємо режим колонок */
-            align-items: center; /* Вирівнюємо колонки по центру */
-            gap: 3rem; /* Відстань між фото і текстом */
+            /* 1. Створюємо двоколонковий макет */
+            display: flex;
+            align-items: center;
+            gap: 3rem;
             
-            max-width: 1200px; /* Обмежуємо ширину на великих екранах */
-            margin: 6rem auto; /* Центруємо всю секцію */
-            padding: 3rem;
-
-            /* Стильна напівпрозора рамка для всієї секції */
-            background: rgba(25, 28, 59, 0.5);
-            backdrop-filter: blur(10px);
+            /* 2. Центруємо та обмежуємо ширину */
+            max-width: 1100px;
+            margin: 6rem auto;
+            
+            /* 3. НАЙВАЖЛИВІШЕ: "Скляний" ефект, щоб було видно кристал */
+            background: rgba(17, 26, 59, 0.6); /* Напівпрозорий фон */
+            backdrop-filter: blur(10px); /* Розмиття фону */
             border: 1px solid rgba(255, 255, 255, 0.1);
+            
+            /* 4. Фінальне шліфування */
             border-radius: 20px;
+            padding: 3rem;
+            text-align: left; /* Вирівнюємо весь текст по лівому краю */
         }
 
         .about-photo-container {
-            flex: 1; /* Займає одну частину доступного простору */
-            max-width: 40%; /* Обмежуємо максимальну ширину */
+            flex: 0 0 40%; /* Фото займає 40% ширини */
         }
 
         .about-photo-container img {
             width: 100%;
-            height: auto;
             border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-        }
-
-        .about-photo-container img:hover {
-            transform: scale(1.05);
         }
 
         .about-text-container {
-            flex: 1.5; /* Займає півтори частини простору (трохи більша за фото) */
-            text-align: left;
+            flex: 1 1 60%; /* Текст займає 60% ширини */
         }
 
         .section-title {
             font-size: 2.5rem;
             margin-top: 0;
+            color: #fff;
         }
 
         .about-story {
@@ -278,23 +276,8 @@
 
         .skill-groups {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 2rem;
-        }
-
-        .skill-group {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 15px;
-            padding: 1.5rem;
-            transition: all 0.3s ease;
-        }
-
-        .skill-group:hover {
-            background: rgba(255, 255, 255, 0.08);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Адаптивні колонки */
+            gap: 1.5rem;
         }
 
         .skill-group h3 {
