@@ -274,3 +274,47 @@ if (copyButton) {
     });
   });
 }
+
+// --- Modal Window Logic ---
+
+// 1. Знаходимо всі кнопки, що відкривають модальні вікна
+const openModalButtons = document.querySelectorAll('[data-modal]');
+
+// 2. Додаємо кожній кнопці слухач кліку
+openModalButtons.forEach(button => {
+  button.addEventListener('click', (event) => {
+    event.preventDefault(); // Запобігаємо переходу по посиланню
+    
+    // Знаходимо потрібне модальне вікно за його ID з data-атрибута
+    const modalId = button.getAttribute('data-modal');
+    const modal = document.getElementById(modalId);
+    
+    // Показуємо вікно
+    if (modal) {
+      modal.classList.add('active');
+    }
+  });
+});
+
+// 3. Знаходимо всі кнопки закриття
+const closeModalButtons = document.querySelectorAll('.modal-close');
+
+// 4. Додаємо кожній кнопці слухач кліку
+closeModalButtons.forEach(button => {
+  button.addEventListener('click', () => {
+    const modal = button.closest('.modal-overlay'); // Знаходимо батьківське вікно
+    modal.classList.remove('active'); // Ховаємо вікно
+  });
+});
+
+// 5. Закриття вікна при кліку на оверлей (темний фон)
+const allModals = document.querySelectorAll('.modal-overlay');
+
+allModals.forEach(modal => {
+  modal.addEventListener('click', (event) => {
+    // Якщо клік був саме на оверлей, а не на його вміст
+    if (event.target === modal) {
+      modal.classList.remove('active');
+    }
+  });
+});
