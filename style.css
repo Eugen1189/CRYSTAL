@@ -121,9 +121,20 @@ p {
     backdrop-filter: blur(10px);
     z-index: 100;
     
-    display: none; /* Будемо показувати через JS */
+    display: flex; /* ЗАВЖДИ flex */
     justify-content: center;
     align-items: center;
+    
+    /* Ховаємо через прозорість */
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.4s ease, visibility 0.4s ease;
+}
+
+/* Новий клас, який будемо додавати через JS */
+.modal-overlay.active {
+    opacity: 1;
+    visibility: visible;
 }
 
 .modal-content {
