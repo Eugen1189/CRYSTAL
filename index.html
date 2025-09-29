@@ -228,23 +228,62 @@
 
         /* --- New About Me Section Styles --- */
         .about-section {
-            display: flex;
-            align-items: center;
-            gap: 4rem; /* Відстань між фото та текстом */
-            padding: 6rem 0; /* Більше "повітря" зверху та знизу */
-            max-width: 1200px;
-            margin: 0 auto;
+            /* 1. Створюємо контекст позиціонування */
+            position: relative; 
+            
+            /* 2. Встановлюємо фон + затемнення для читабельності */
+            background-image: 
+                linear-gradient(rgba(15, 23, 42, 0.85), rgba(15, 23, 42, 0.85)), 
+                url('/profile-photo.jpg');
+
+            /* 3. Налаштовуємо поведінку фону */
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed; /* Створює ефект паралаксу при скролі */
+
+            /* 4. Встановлюємо внутрішні відступи, щоб контент не прилипав до країв */
+            padding: 120px 20px;
+
+            /* 5. Гарантуємо, що секція буде під основним контентом, якщо є інші шари */
+            z-index: 1; 
         }
 
-        .about-photo-container {
-            flex-basis: 35%; /* Фото займає приблизно третину блоку */
-            flex-shrink: 0;
+        /* Обгортка для контенту, щоб обмежити його ширину на великих екранах */
+        .about-content-wrapper {
+            max-width: 960px; /* Можете підібрати ширину під ваш дизайн */
+            margin: 0 auto;  /* Центрує блок з контентом */
+            position: relative; /* Потрібно, щоб контент був вище фону */
+            z-index: 2;
         }
 
-        .about-photo-container img {
-            width: 100%;
-            border-radius: 10px;
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        /* Стилі для заголовка */
+        .about-title {
+            font-size: 3rem;
+            font-weight: 900;
+            color: #fff;
+            text-align: center;
+            margin-bottom: 2rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Стилі для опису */
+        .about-description {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            color: #e2e8f0;
+            text-align: center;
+            margin-bottom: 2rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Стилі для сітки навичок */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+            margin-top: 3rem;
         }
 
         .about-text-container {
