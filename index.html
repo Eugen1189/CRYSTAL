@@ -226,44 +226,35 @@
             color: #0d1a44;
         }
 
-        /* --- Final Professional "About Me" Section --- */
+        /* --- New About Me Section Styles --- */
         .about-section {
-            /* 1. Створюємо двоколонковий макет */
             display: flex;
             align-items: center;
-            gap: 3rem;
-            
-            /* 2. Центруємо та обмежуємо ширину */
-            max-width: 1100px;
-            margin: 6rem auto;
-            
-            /* 3. НАЙВАЖЛИВІШЕ: "Скляний" ефект, щоб було видно кристал */
-            background: rgba(17, 26, 59, 0.6); /* Напівпрозорий фон */
-            backdrop-filter: blur(10px); /* Розмиття фону */
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            
-            /* 4. Фінальне шліфування */
-            border-radius: 20px;
-            padding: 3rem;
-            text-align: left; /* Вирівнюємо весь текст по лівому краю */
+            gap: 4rem; /* Відстань між фото та текстом */
+            padding: 6rem 0; /* Більше "повітря" зверху та знизу */
+            max-width: 1200px;
+            margin: 0 auto;
         }
 
         .about-photo-container {
-            flex: 0 0 40%; /* Фото займає 40% ширини */
+            flex-basis: 35%; /* Фото займає приблизно третину блоку */
+            flex-shrink: 0;
         }
 
         .about-photo-container img {
             width: 100%;
-            border-radius: 15px;
+            border-radius: 10px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
         }
 
         .about-text-container {
-            flex: 1 1 60%; /* Текст займає 60% ширини */
+            flex-basis: 65%;
+            text-align: left; /* Вирівнюємо текст по лівому краю */
         }
 
         .section-title {
             font-size: 2.5rem;
-            margin-top: 0;
+            margin-bottom: 1.5rem;
             color: #fff;
         }
 
@@ -276,13 +267,28 @@
 
         .skill-groups {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Адаптивні колонки */
-            gap: 1.5rem;
+            grid-template-columns: 1fr 1fr; /* Дві колонки для навичок */
+            gap: 2rem;
+        }
+
+        .skill-group {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .skill-group:hover {
+            background: rgba(255, 255, 255, 0.08);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
         }
 
         .skill-group h3 {
             font-size: 1.1rem;
-            color: #81f5ff;
+            color: #81f5ff; /* Колір акценту */
             margin-bottom: 0.5rem;
         }
 
