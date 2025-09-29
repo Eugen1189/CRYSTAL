@@ -226,6 +226,98 @@
             color: #0d1a44;
         }
 
+        /* About Section Styles */
+        .about-section {
+            display: flex;
+            align-items: center;
+            gap: 4rem;
+            padding: 4rem 2rem;
+            min-height: 80vh;
+        }
+
+        .about-photo-container {
+            flex: 1;
+            max-width: 400px;
+        }
+
+        .about-photo-container img {
+            width: 100%;
+            height: auto;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .about-photo-container img:hover {
+            transform: scale(1.05);
+        }
+
+        .about-text-container {
+            flex: 1;
+            max-width: 600px;
+        }
+
+        .section-title {
+            font-family: 'Unbounded', sans-serif;
+            font-weight: 900;
+            background: linear-gradient(135deg, #4ecdc4 0%, #45b7d1 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-size: 3rem;
+            margin-bottom: 2rem;
+            text-shadow: none;
+        }
+
+        .about-story {
+            font-family: 'Unbounded', sans-serif;
+            font-weight: 400;
+            color: #E8E8E8;
+            font-size: 1.2rem;
+            line-height: 1.8;
+            margin-bottom: 3rem;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+        }
+
+        .skill-groups {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .skill-group {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .skill-group:hover {
+            background: rgba(255, 255, 255, 0.08);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .skill-group h3 {
+            font-family: 'Unbounded', sans-serif;
+            font-weight: 600;
+            color: #81f5ff;
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 0 10px rgba(129, 245, 255, 0.3);
+        }
+
+        .skill-group p {
+            font-family: 'Unbounded', sans-serif;
+            font-weight: 400;
+            color: #ccc;
+            font-size: 1rem;
+            line-height: 1.6;
+            margin: 0;
+        }
+
         h2 {
             font-family: 'Unbounded', sans-serif;
             font-weight: 900;
@@ -783,6 +875,43 @@
                 font-size: 1rem;
                 padding: 0.8rem 1.5rem;
             }
+
+            /* About section mobile styles */
+            .about-section {
+                flex-direction: column;
+                gap: 2rem;
+                padding: 2rem 1rem;
+                min-height: auto;
+            }
+
+            .about-photo-container {
+                max-width: 300px;
+                order: 2;
+            }
+
+            .about-text-container {
+                max-width: 100%;
+                order: 1;
+            }
+
+            .section-title {
+                font-size: 2.5rem;
+                text-align: center;
+            }
+
+            .about-story {
+                font-size: 1.1rem;
+                text-align: center;
+            }
+
+            .skill-groups {
+                gap: 1rem;
+            }
+
+            .skill-group {
+                padding: 1rem;
+                text-align: center;
+            }
             
             /* 2. Fixes for "Welcome" section */
             .welcome-pillars {
@@ -921,6 +1050,36 @@
                 max-width: 280px;
                 text-align: center;
             }
+
+            /* About section small mobile styles */
+            .about-section {
+                padding: 1.5rem 0.5rem;
+                gap: 1.5rem;
+            }
+
+            .about-photo-container {
+                max-width: 250px;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .about-story {
+                font-size: 1rem;
+            }
+
+            .skill-group {
+                padding: 0.8rem;
+            }
+
+            .skill-group h3 {
+                font-size: 1rem;
+            }
+
+            .skill-group p {
+                font-size: 0.9rem;
+            }
             
             .project-branch {
                 padding: 1rem;
@@ -975,6 +1134,35 @@
                 <a href="#contact" class="cta-secondary">Обговорити проєкт</a>
             </div>
         </section>
+
+        <section id="about" class="section about-section">
+            <div class="about-photo-container">
+                <img src="/photo_5388727340252658670_y.jpg" alt="Фото Євгенія">
+            </div>
+
+            <div class="about-text-container">
+                <h2 class="section-title">Про мене</h2>
+                <p class="about-story">
+                    Мене завжди захоплювала магія перетворення статичного дизайну на живий, інтерактивний продукт. Для мене код — це інструмент для створення зручних рішень, якими користуються тисячі людей. Найбільше задоволення я отримую, коли знаходжу елегантне рішення для складної технічної задачі.
+                </p>
+
+                <div class="skill-groups">
+                    <div class="skill-group">
+                        <h3>Створюю інтерфейси:</h3>
+                        <p>React, TypeScript, Redux Toolkit, Three.js</p>
+                    </div>
+                    <div class="skill-group">
+                        <h3>Стилізую та анімую:</h3>
+                        <p>CSS Modules, Framer Motion, GSAP</p>
+                    </div>
+                    <div class="skill-group">
+                        <h3>Забезпечую якість коду:</h3>
+                        <p>Jest, ESLint, Prettier</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <section id="projects" class="section">
             <h1 class="text-3d">Projects</h1>
 
