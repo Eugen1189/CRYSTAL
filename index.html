@@ -146,84 +146,84 @@
             opacity: 1; /* Показуємо перший заголовок */
         }
 
-        /* Hero section styles */
+        /* --- New Hero Section Styles --- */
+        .hero-section {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 80vh; /* Займає більшу частину екрану */
+            text-align: center;
+        }
+
         .main-headline {
             font-family: 'Unbounded', sans-serif;
             font-weight: 900;
-            background: linear-gradient(135deg, #4ecdc4 0%, #45b7d1 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            font-size: 4.5em;
-            text-shadow:
-                2px 2px 4px rgba(0, 0, 0, 0.8),
-                0 0 20px rgba(78, 205, 196, 0.4);
+            font-size: 3.5rem; /* Великий, потужний заголовок */
+            max-width: 800px;
+            line-height: 1.2;
+            color: #fff;
+            /* Прибираємо старий 3D-ефект, якщо він був */
+            text-shadow: none; 
+            transform: none;
             text-align: center;
             margin-bottom: 2rem;
-            line-height: 1.2;
-            max-width: 900px;
             opacity: 1;
         }
 
         .sub-headline {
             font-family: 'Unbounded', sans-serif;
             font-weight: 400;
-            color: #E8E8E8;
-            text-align: center;
+            font-size: 1.25rem;
+            max-width: 600px;
+            color: #ccc;
+            margin-top: 1rem;
             line-height: 1.6;
-            max-width: 700px;
-            font-size: 1.4em;
-            text-shadow: 
-                1px 1px 2px rgba(0, 0, 0, 0.8),
-                0 0 8px rgba(0, 0, 0, 0.5);
+            text-align: center;
             opacity: 1;
         }
 
-        /* CTA Buttons styles */
         .cta-buttons {
             display: flex;
-            gap: 2rem;
+            gap: 1rem; /* Відстань між кнопками */
+            margin-top: 2.5rem;
             justify-content: center;
-            margin-top: 3rem;
             flex-wrap: wrap;
         }
 
         .cta-primary,
         .cta-secondary {
             font-family: 'Unbounded', sans-serif;
-            font-weight: 600;
-            padding: 1rem 2rem;
+            padding: 12px 28px;
             border-radius: 50px;
+            font-weight: bold;
             text-decoration: none;
             transition: all 0.3s ease;
             display: inline-block;
             font-size: 1.1rem;
-            border: 2px solid transparent;
             cursor: pointer;
         }
 
         .cta-primary {
-            background: linear-gradient(135deg, #4ecdc4 0%, #45b7d1 100%);
-            color: #fff;
-            box-shadow: 0 4px 15px rgba(78, 205, 196, 0.3);
+            background-color: #81f5ff; /* Яскравий акцентний колір */
+            color: #0d1a44;
         }
 
         .cta-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(78, 205, 196, 0.4);
+            background-color: #fff;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(129, 245, 255, 0.2);
         }
 
         .cta-secondary {
-            background: transparent;
-            color: #4ecdc4;
-            border: 2px solid #4ecdc4;
-            backdrop-filter: blur(10px);
+            background-color: transparent;
+            color: #fff;
+            border: 1px solid #fff;
         }
 
         .cta-secondary:hover {
-            background: rgba(78, 205, 196, 0.1);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(78, 205, 196, 0.2);
+            background-color: #fff;
+            color: #0d1a44;
         }
 
         h2 {
@@ -765,6 +765,7 @@
                 font-size: 2.5rem;
                 line-height: 1.2;
                 margin-bottom: 1.5rem;
+                max-width: 90%;
             }
 
             .sub-headline {
@@ -897,6 +898,7 @@
                 font-size: 2rem;
                 line-height: 1.2;
                 margin-bottom: 1rem;
+                max-width: 95%;
             }
 
             .sub-headline {
