@@ -179,6 +179,53 @@
             opacity: 1;
         }
 
+        /* CTA Buttons styles */
+        .cta-buttons {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            margin-top: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .cta-primary,
+        .cta-secondary {
+            font-family: 'Unbounded', sans-serif;
+            font-weight: 600;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-block;
+            font-size: 1.1rem;
+            border: 2px solid transparent;
+            cursor: pointer;
+        }
+
+        .cta-primary {
+            background: linear-gradient(135deg, #4ecdc4 0%, #45b7d1 100%);
+            color: #fff;
+            box-shadow: 0 4px 15px rgba(78, 205, 196, 0.3);
+        }
+
+        .cta-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(78, 205, 196, 0.4);
+        }
+
+        .cta-secondary {
+            background: transparent;
+            color: #4ecdc4;
+            border: 2px solid #4ecdc4;
+            backdrop-filter: blur(10px);
+        }
+
+        .cta-secondary:hover {
+            background: rgba(78, 205, 196, 0.1);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(78, 205, 196, 0.2);
+        }
+
         h2 {
             font-family: 'Unbounded', sans-serif;
             font-weight: 900;
@@ -724,6 +771,17 @@
                 font-size: 1.1rem;
                 max-width: 90%;
             }
+
+            .cta-buttons {
+                gap: 1.5rem;
+                margin-top: 2rem;
+            }
+
+            .cta-primary,
+            .cta-secondary {
+                font-size: 1rem;
+                padding: 0.8rem 1.5rem;
+            }
             
             /* 2. Fixes for "Welcome" section */
             .welcome-pillars {
@@ -845,6 +903,22 @@
                 font-size: 1rem;
                 max-width: 95%;
             }
+
+            .cta-buttons {
+                flex-direction: column;
+                gap: 1rem;
+                margin-top: 1.5rem;
+                align-items: center;
+            }
+
+            .cta-primary,
+            .cta-secondary {
+                font-size: 0.9rem;
+                padding: 0.7rem 1.2rem;
+                width: 90%;
+                max-width: 280px;
+                text-align: center;
+            }
             
             .project-branch {
                 padding: 1rem;
@@ -893,8 +967,13 @@
             <p class="sub-headline">
                 Створюю швидкі та інтуїтивні веб-інтерфейси, що приносять результат бізнесу.
             </p>
+
+            <div class="cta-buttons">
+                <a href="#projects" class="cta-primary">Переглянути мої роботи</a>
+                <a href="#contact" class="cta-secondary">Обговорити проєкт</a>
+            </div>
         </section>
-        <section class="section">
+        <section id="projects" class="section">
             <h1 class="text-3d">Projects</h1>
 
             <div class="project-tree">
@@ -938,7 +1017,7 @@
 
             </div>
         </section>
-        <section class="section">
+        <section id="contact" class="section">
             <h1 class="text-3d">Have an idea?</h1>
             <p class="subtitle">Let's create something incredible together.</p>
 
