@@ -31,6 +31,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
     
     <style>
         * {
@@ -227,32 +228,32 @@
         }
 
         /* --- New About Me Section Styles --- */
+        /* --- Секція "Про мене" --- */
         .about-section {
-            /* 1. Створюємо контекст позиціонування */
-            position: relative; 
+            position: relative;
+            padding: 120px 20px;
             
-            /* 2. Встановлюємо фон + затемнення для читабельності */
+            /* --- Фон та його затемнення --- */
             background-image: 
+                /* Затемнюючий шар. 0.85 - рівень прозорості, можете змінити */
                 linear-gradient(rgba(15, 23, 42, 0.85), rgba(15, 23, 42, 0.85)), 
+                /* Шлях до вашого фото */
                 url('/profile-photo.jpg');
 
-            /* 3. Налаштовуємо поведінку фону */
             background-size: cover;
-            background-position: center top; /* Оптимальна позиція для фото */
-            background-attachment: fixed; /* Створює ефект паралаксу при скролі */
+            /* КЛЮЧОВА ЗМІНА: Вирівнює фото по центру вгорі, щоб було видно обличчя */
+            background-position: center top; 
+            background-attachment: fixed; /* Ефект паралаксу */
 
-            /* 4. Встановлюємо внутрішні відступи, щоб контент не прилипав до країв */
-            padding: 120px 20px;
-
-            /* 5. Гарантуємо, що секція буде під основним контентом, якщо є інші шари */
-            z-index: 1; 
+            overflow: hidden; /* Запобігає виходу елементів за межі */
+            z-index: 1;
         }
 
-        /* Обгортка для контенту, щоб обмежити його ширину на великих екранах */
+        /* Обгортка для контенту, щоб він не розтягувався на всю ширину */
         .about-content-wrapper {
-            max-width: 960px; /* Можете підібрати ширину під ваш дизайн */
-            margin: 0 auto;  /* Центрує блок з контентом */
-            position: relative; /* Потрібно, щоб контент був вище фону */
+            max-width: 960px;
+            margin: 0 auto;
+            position: relative;
             z-index: 2;
         }
 
