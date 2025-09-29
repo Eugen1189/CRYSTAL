@@ -228,26 +228,31 @@
 
         /* --- New About Me Section Styles --- */
         .about-section {
-            display: flex;
-            align-items: center;
-            gap: 4rem;
-            padding: 6rem 0;
+            display: flex; /* Вмикаємо режим колонок */
+            align-items: center; /* Вирівнюємо колонки по центру */
+            gap: 3rem; /* Відстань між фото і текстом */
+            
+            max-width: 1200px; /* Обмежуємо ширину на великих екранах */
+            margin: 6rem auto; /* Центруємо всю секцію */
+            padding: 3rem;
 
-            /* Обмежуємо ширину секції для кращої читабельності */
-            max-width: 1100px;
-            margin: 0 auto; /* Центруємо секцію на сторінці */
+            /* Стильна напівпрозора рамка для всієї секції */
+            background: rgba(25, 28, 59, 0.5);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
         }
 
         .about-photo-container {
-            flex-basis: 30%;
-            flex-shrink: 0;
+            flex: 1; /* Займає одну частину доступного простору */
+            max-width: 40%; /* Обмежуємо максимальну ширину */
         }
 
         .about-photo-container img {
             width: 100%;
-            border-radius: 15px; /* Трохи більший радіус */
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3); /* Більш виражена тінь */
-            transition: transform 0.3s ease;
+            height: auto;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
         }
 
         .about-photo-container img:hover {
@@ -255,25 +260,16 @@
         }
 
         .about-text-container {
-            flex-basis: 65%;
-            text-align: left; /* Вирівнюємо текст по лівому краю */
+            flex: 1.5; /* Займає півтори частини простору (трохи більша за фото) */
+            text-align: left;
         }
 
         .section-title {
-            font-family: 'Unbounded', sans-serif;
-            font-weight: 900;
             font-size: 2.5rem;
-            margin-bottom: 1.5rem;
-            color: #fff;
-            background: linear-gradient(135deg, #4ecdc4 0%, #45b7d1 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            margin-top: 0;
         }
 
         .about-story {
-            font-family: 'Unbounded', sans-serif;
-            font-weight: 400;
             font-size: 1.1rem;
             line-height: 1.7;
             color: #ccc;
@@ -282,7 +278,7 @@
 
         .skill-groups {
             display: grid;
-            grid-template-columns: 1fr 1fr; /* Дві колонки для навичок */
+            grid-template-columns: 1fr 1fr;
             gap: 2rem;
         }
 
@@ -302,20 +298,15 @@
         }
 
         .skill-group h3 {
-            font-family: 'Unbounded', sans-serif;
-            font-weight: 600;
             font-size: 1.1rem;
-            color: #81f5ff; /* Колір акценту */
+            color: #81f5ff;
             margin-bottom: 0.5rem;
         }
 
         .skill-group p {
-            font-family: 'Unbounded', sans-serif;
-            font-weight: 400;
             margin: 0;
             color: #ccc;
             line-height: 1.5;
-            font-size: 1rem;
         }
 
         h2 {
